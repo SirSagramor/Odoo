@@ -1,2 +1,2 @@
 # Odoo
-Odoo course test
+Using Python 3.6.6
