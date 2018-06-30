@@ -7,21 +7,17 @@
 
 
 def tickets(n, summa):
-    from itertools import combinations_with_replacement, permutations
+    from itertools import combinations_with_replacement
+    from math import factorial
 
-    comb = combinations_with_replacement(range(summa + 1), n)
-    perm = set()
+    comb = list(filter(lambda x: sum(x) == summa / 2, combinations_with_replacement(range(summa + 1), n)))
 
+    permutations = 0
     for i in comb:
-        for j in permutations(i, n):
-            perm.add(j)
+        permutations += factorial(n) / factorial(n - len(set(i)) + 1)
 
-    amount = 0
-    for i in perm:
-        if sum(i) == summa / 2:
-            amount += 1
+    return int(permutations ** 2)
 
-    return amount ** 2
 
 n, summa = map(int, input().split())
 
