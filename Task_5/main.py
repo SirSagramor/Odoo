@@ -29,6 +29,7 @@ class Intersection:
         self.timer = Timer(time, self.change)
         self.timer.start()
 
+    # change all the traffic lights
     def change(self):
         for key in self.carLights:
             for i in range(len(self.carLights[key])):
@@ -39,7 +40,7 @@ class Intersection:
         self.timer = Timer(self.time, self.change)
         self.timer.start()
 
-
+    # check is the side of the traffic lights glows Green
     def isWorking(self, side):
         on = True
         if side == 'north' or side == 'south':
@@ -62,12 +63,14 @@ class Intersection:
                 on = not self.carLights['south'][0].on
         return on
 
+    # add light traffic
     def addLight(self, side):
         if side in self.carLights:
             on = self.isWorking(side)
             self.carLights[side].append(TrafficLight(side, on))
             self.humanLights[side].append(TrafficLight(side, on))
 
+    # manual mode
     def manual(self, side, on):
         if side in self.carLights and self.carLights[side][0]:
             if self.carLights[side][0].on == on:
@@ -75,13 +78,14 @@ class Intersection:
             else:
                 self.change()
 
-
+    # delete traffic light
     def delLight(self, side):
         if side in self.carLights:
             if self.carLights[side]:
                 self.carLights.pop()
                 self.humanLights.pop()
 
+    # magic method str
     def __str__(self):
         day = "Day" if self.day else "Night"
         northcar = list(map(lambda x: "Green" if x.on else "Red" ,self.carLights['north']))
@@ -101,11 +105,13 @@ class Intersection:
         '''.format(day, northcar, northhuman, southcar, southhuman, westcar, westhuman, eastcar, easthuman)
 
 
+# traffic light
 class TrafficLight:
     def __init__(self, side, on):
         self.side = side
         self.on = on
 
+# user input
 print("How many seconds need traffic light to change?")
 seconds = int(input())
 intro = Intersection(seconds)
