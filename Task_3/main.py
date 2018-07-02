@@ -6,19 +6,21 @@
 """
 
 
-def tickets(n, summa):
+def tickets(n, amount):
     from itertools import combinations_with_replacement
     from math import factorial
-
-    comb = list(filter(lambda x: sum(x) == summa / 2, combinations_with_replacement(range(summa + 1), n)))
+    # all combinations where sum of the combinate is equal amount  
+    comb = list(filter(lambda x: sum(x) == amount / 2, combinations_with_replacement(range(amount + 1), n)))
 
     permutations = 0
+    # all permutations of the combinations
     for i in comb:
         permutations += factorial(n) / factorial(n - len(set(i)) + 1)
 
+    # combinations of the left and right side 
     return int(permutations ** 2)
 
 
-n, summa = map(int, input().split())
+n, amount = map(int, input().split())
 
-print(tickets(n, summa))
+print(tickets(n, amount))
